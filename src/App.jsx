@@ -1,30 +1,31 @@
+// src/App.jsx
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import About from "./pages/About";
-import NotFound from "./pages/NotFound";
-import SleepClock from "./pages/SleepClock"; // Import the new component
 
-const App = () => {
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import SleepSession from "./pages/SleepSession";
+import Alarm from "./pages/Alarm";
+import { AlarmProvider } from "./contexts/AlarmContext";
+import SleepClock from "./pages/SleepClock";
+import "./App.css";
+
+function App() {
   return (
-    <div>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/sleep-clock">Sleep Clock</Link></li> 
-
-        </ul>
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/sleep-clock" element={<SleepClock />} /> 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </div>
+    <AlarmProvider>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/sleep-session" element={<SleepSession />} />
+          <Route path="/sleep-clock" element={<SleepClock />} /> 
+          <Route path="/alarm" element={<Alarm />} />
+        </Routes>
+      </div>
+    </AlarmProvider>
   );
-};
+}
 
 export default App;
