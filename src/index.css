@@ -1,3 +1,5 @@
+/* index.css or styles.css */
+
 /* General Reset */
 * {
   margin: 0;
@@ -65,24 +67,36 @@ button:hover {
 }
 
 /* Sleep Clock Page Styling */
-.sleep-clock {
+.SleepClock {
   text-align: center;
   padding: 20px;
-  background-color: #fff;
+  background-color: #4CAF50; /* Change to a green color */
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
   max-width: 800px;
+  color: #000; /* Ensure text color is black */
 }
 
-.sleep-clock h1 {
+.SleepClock h1 {
   font-size: 2rem;
-  color: #333;
+  color: #ffffff; /* Keep heading white */
 }
 
-.sleep-clock p {
+.SleepClock p {
   font-size: 1rem;
-  color: #666;
+  color: #d1d1d1; /* Keep paragraph text gray */
+}
+
+/* Ensure all text inside `.SleepClock` has correct coloring */
+.SleepClock ul,
+.SleepClock li {
+  color: #000; /* Ensure list items text is black */
+}
+
+.SleepClock button {
+  background-color: #0077cc;
+  color: white; /* Button text color remains white */
 }
 
 /* Responsive Design */
@@ -97,7 +111,7 @@ button:hover {
   }
 
   /* Adjust Sleep Clock styling for small screens */
-  .sleep-clock {
+  .SleepClock {
     padding: 15px;
     max-width: 100%;
   }
