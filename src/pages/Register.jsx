@@ -12,6 +12,7 @@ const Register = ({ closeModal }) => {
   const [sleepGoal, setSleepGoal] = useState(""); // e.g., target hours of sleep
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
@@ -25,6 +26,20 @@ const Register = ({ closeModal }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError("");
+
+    // Password validation
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    // Simple password strength check
+    if (password.length < 6) {
+      setError("Password should be at least 6 characters long.");
+      return;
+    }
+
     try {
       // Create user with email and password
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -42,13 +57,13 @@ const Register = ({ closeModal }) => {
       let errorMessage = "";
       switch (err.code) {
         case "auth/email-already-in-use":
-          errorMessage = "This email is already in use.";
+          errorMessage = "Email is already in use.";
           break;
         case "auth/invalid-email":
           errorMessage = "Invalid email address.";
           break;
         case "auth/weak-password":
-          errorMessage = "Password is too weak. Please choose a stronger password.";
+          errorMessage = "Password is too weak.";
           break;
         default:
           errorMessage = "Registration failed. Please try again.";
@@ -59,13 +74,13 @@ const Register = ({ closeModal }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content">
-        <h2>Register</h2>
+      <div className="modal-content themed-card">
+        <h2 className="themed-heading">Register</h2>
         <form onSubmit={handleRegister}>
           <div className="form section">
-            <label>Full Name:</label>
+            <label className="themed-label">Full Name:</label>
             <input
-              className="input"
+              className="input themed-input"
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
@@ -73,9 +88,9 @@ const Register = ({ closeModal }) => {
             />
           </div>
           <div className="form section">
-            <label>Age:</label>
+            <label className="themed-label">Age:</label>
             <input
-              className="input"
+              className="input themed-input"
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
@@ -83,9 +98,9 @@ const Register = ({ closeModal }) => {
             />
           </div>
           <div className="form section">
-            <label>Sleep Goal (hours):</label>
+            <label className="themed-label">Sleep Goal (hours):</label>
             <input
-              className="input"
+              className="input themed-input"
               type="number"
               value={sleepGoal}
               onChange={(e) => setSleepGoal(e.target.value)}
@@ -93,9 +108,9 @@ const Register = ({ closeModal }) => {
             />
           </div>
           <div className="form section">
-            <label>Email:</label>
+            <label className="themed-label">Email:</label>
             <input
-              className="input"
+              className="input themed-input"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -103,18 +118,28 @@ const Register = ({ closeModal }) => {
             />
           </div>
           <div className="form section">
-            <label>Password:</label>
+            <label className="themed-label">Password:</label>
             <input
-              className="input"
+              className="input themed-input"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          {error && <p className="error-message">{error}</p>}
-          <div className="section">
-            <button className="button button-green" type="submit">
+          <div className="form section">
+            <label className="themed-label">Confirm Password:</label>
+            <input
+              className="input themed-input"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <p className="error-message themed-error">{error}</p>}
+          <div className="button-group">
+            <button className="button button-blue" type="submit">
               Register
             </button>
             {closeModal && (

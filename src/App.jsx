@@ -8,6 +8,7 @@ import Landing from "./pages/Landing";
 import SleepSession from "./pages/SleepSession";
 import Alarm from "./pages/Alarm";
 import IntegratedSleepClock from "./pages/Clock/IntegratedSleepClock";
+import ForgottenPasswordPage from "./pages/ForgottenPasswordPage";
 import { AlarmProvider } from "./contexts/AlarmContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemeToggle from "./components/ThemeToggle";
@@ -23,7 +24,7 @@ function App() {
   const location = useLocation();
   
   // Public routes where we don't want to show the bottom navigation
-  const publicRoutes = ['/login', '/register', '/landing'];
+  const publicRoutes = ['/login', '/register', '/landing', '/forgot-password'];
   const showBottomNav = user && !publicRoutes.includes(location.pathname);
   
   // Set the theme class on the HTML element to allow for full-page theming
@@ -47,6 +48,7 @@ function App() {
             <Route path="/landing" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgottenPasswordPage />} />
             
             {/* Protected routes */}
             <Route 
@@ -90,7 +92,7 @@ function App() {
           </Routes>
           
           {showBottomNav && <BottomNavigation />}
-          {user && <ThemeToggle />}
+          {(user || location.pathname === '/landing') && <ThemeToggle />}
         </div>
       </AlarmProvider>
     </ThemeProvider>

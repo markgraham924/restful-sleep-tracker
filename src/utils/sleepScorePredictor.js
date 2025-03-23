@@ -352,7 +352,7 @@ class SleepScorePredictor {
     const trainingData = [];
     
     // Number of examples to generate
-    const numExamples = 1000; // Increased from 500
+    const numExamples = 100; // Increased from 500
     
     // Generate structured examples that follow realistic patterns
     for (let i = 0; i < numExamples; i++) {
