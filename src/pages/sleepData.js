@@ -12,6 +12,10 @@ import {
 } from "firebase/firestore";
 import sleepScorePredictor from "../utils/sleepScorePredictor";
 
+// Simple cache to track users who already had default data generated
+// This prevents duplicate generation during development (React StrictMode) or rapid rerenders
+const defaultDataGeneratedFor = new Set();
+
 // Initialize the KNN model when the module loads
 (async function() {
   try {
@@ -24,7 +28,7 @@ import sleepScorePredictor from "../utils/sleepScorePredictor";
 
 /**
  * Fetches sleep data for a specific user from Firestore
- * Modified to handle enhanced sleep score calculation with confidence
+ * Modified to NOT auto-generate data if none exists
  * @param {string} userId - The user ID
  * @returns {Promise<Object>} - Object containing formatted sleep data
  */
@@ -49,7 +53,8 @@ export const getUserSleepData = async (userId) => {
     
     // Check if we have any sleep data
     if (querySnapshot.empty) {
-      console.log("No sleep data found - returning default data");
+      console.log("No sleep data found - returning empty data");
+      // Return default data structure but don't generate in database
       return generateDefaultSleepData();
     }
     
@@ -109,7 +114,8 @@ export const getUserSleepData = async (userId) => {
         sleepScoreConfidence: sleepScore.confidence,
         sleepScoreMessage: sleepScore.message
       },
-      sleepDistribution: calculateSleepDistribution(weeklyData)
+      sleepDistribution: calculateSleepDistribution(weeklyData),
+      allEntries: sleepEntries.sort((a, b) => new Date(a.date) - new Date(b.date))
     };
     
     return formattedData;
@@ -413,4 +419,77 @@ const generateDefaultLastNight = () => {
     bedtime: '23:00',
     wakeTime: '06:30',
   };
+};
+
+/**
+ * Generates default sleep data and uploads it to Firestore
+ * Now explicitly exported for user registration
+ * @param {string} userId - The user ID
+ * @returns {Promise<Object>} - Generated and uploaded sleep data
+ */
+export const generateDefaultSleepDataForUser = async (userId) => {
+  try {
+    // Check if we've already generated data for this user
+    if (await checkUserHasSleepData(userId)) {
+      console.log(`User ${userId} already has sleep data, skipping generation`);
+      return null;
+    }
+    
+    // Generate default sleep data
+    const defaultData = await generateDefaultSleepData();
+    
+    // Upload each day of weekly data to Firestore
+    for (const entry of defaultData.weeklyData) {
+      const sleepEntry = {
+        userId,
+        date: Timestamp.fromDate(new Date(entry.date)),
+        sleepDuration: entry.sleepDuration,
+        deepSleep: entry.deepSleep,
+        remSleep: entry.remSleep,
+        lightSleep: entry.lightSleep,
+        quality: entry.quality,
+        interruptions: entry.interruptions,
+        bedtime: entry.date === defaultData.lastNight.date ? defaultData.lastNight.bedtime : '22:30',
+        wakeTime: entry.date === defaultData.lastNight.date ? defaultData.lastNight.wakeTime : '06:45',
+        notes: 'Auto-generated sleep data',
+      };
+      
+      // Upload to Firestore
+      await addSleepEntry(sleepEntry);
+    }
+    
+    console.log(`Generated and uploaded default sleep data for user: ${userId}`);
+    return defaultData;
+  } catch (error) {
+    console.error("Error generating and uploading default data:", error);
+    throw error;
+  }
+};
+
+/**
+ * Checks if a user already has any sleep data
+ * @param {string} userId - The user ID
+ * @returns {Promise<boolean>} - True if user has data, false otherwise
+ */
+export const checkUserHasSleepData = async (userId) => {
+  try {
+    const sleepEntriesRef = collection(db, "sleepEntries");
+    const q = query(
+      sleepEntriesRef,
+      where("userId", "==", userId),
+      limit(1)
+    );
+    
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
+  } catch (error) {
+    console.error("Error checking user sleep data:", error);
+    return false;
+  }
+};
+
+// Keep the old function for backward compatibility but make it private
+const generateAndUploadDefaultData = async (userId) => {
+  console.warn("generateAndUploadDefaultData is deprecated - use generateDefaultSleepDataForUser instead");
+  return generateDefaultSleepDataForUser(userId);
 };

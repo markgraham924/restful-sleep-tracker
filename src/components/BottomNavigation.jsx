@@ -27,6 +27,12 @@ const BottomNavigation = () => {
       icon: '📝'
     },
     {
+      id: 'weekly',
+      label: 'Weekly',
+      path: '/weekly',
+      icon: '📅'
+    },
+    {
       id: 'calculator',
       label: 'Calculator',
       path: '/sleep-clock',

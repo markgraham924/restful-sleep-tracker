@@ -9,6 +9,7 @@ import SleepSession from "./pages/SleepSession";
 import Alarm from "./pages/Alarm";
 import IntegratedSleepClock from "./pages/Clock/IntegratedSleepClock";
 import ForgottenPasswordPage from "./pages/ForgottenPasswordPage";
+import WeeklyRecords from "./pages/WeeklyRecords";
 import { AlarmProvider } from "./contexts/AlarmContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemeToggle from "./components/ThemeToggle";
@@ -80,6 +81,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <IntegratedSleepClock />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/weekly" 
+              element={
+                <ProtectedRoute>
+                  <WeeklyRecords />
                 </ProtectedRoute>
               } 
             />

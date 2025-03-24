@@ -5,6 +5,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+// Import the function to generate default sleep data
+import { generateDefaultSleepDataForUser } from "./sleepData";
 
 const Register = ({ closeModal }) => {
   const [fullName, setFullName] = useState("");
@@ -51,6 +53,16 @@ const Register = ({ closeModal }) => {
         email,
         createdAt: new Date(),
       });
+
+      // Generate default sleep data for the new user
+      try {
+        await generateDefaultSleepDataForUser(res.user.uid);
+        console.log("Default sleep data generated for new user");
+      } catch (dataErr) {
+        console.error("Error generating default sleep data:", dataErr);
+        // Non-critical error, don't interrupt registration flow
+      }
+
       // Navigation will happen automatically through useEffect
       if (closeModal) closeModal();
     } catch (err) {
