@@ -11,7 +11,6 @@ export function AlarmProvider({ children }) {
   const [alarmTime, setAlarmTime] = useState("");
   const [isAlarmSet, setIsAlarmSet] = useState(false);
   const [isAlarmActive, setIsAlarmActive] = useState(false);
-  const [alarmAudio] = useState(new Audio("https://www.soundjay.com/button/beep-07.wav"));
   const [bedtime, setBedtime] = useState("");
   const [sleepStarted, setSleepStarted] = useState(false);
   const [sleepStartTime, setSleepStartTime] = useState(null);
@@ -32,18 +31,14 @@ export function AlarmProvider({ children }) {
         
         if (currentHour === alarmHour && currentMinute === alarmMinute) {
           setIsAlarmActive(true);
-          alarmAudio.loop = true;
-          alarmAudio.play();
         }
       }, 1000);
     }
     
     return () => {
       clearInterval(interval);
-      alarmAudio.pause();
-      alarmAudio.currentTime = 0;
     };
-  }, [isAlarmSet, alarmTime, alarmAudio]);
+  }, [isAlarmSet, alarmTime]);
 
   // Start sleep tracking
   const startSleepTracking = (customBedtime = null) => {
@@ -66,8 +61,6 @@ export function AlarmProvider({ children }) {
     setIsAlarmSet(false);
     setIsAlarmActive(false);
     setSleepStarted(false);
-    alarmAudio.pause();
-    alarmAudio.currentTime = 0;
     
     const now = new Date();
     const wakeTime = now.getHours().toString().padStart(2, '0') + ':' + 
@@ -97,8 +90,6 @@ export function AlarmProvider({ children }) {
     setBedtime("");
     setSleepStarted(false);
     setSleepStartTime(null);
-    alarmAudio.pause();
-    alarmAudio.currentTime = 0;
   };
   
   // Store sleep recommendations from the integrated sleep clock
