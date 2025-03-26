@@ -13,8 +13,11 @@ const Register = ({ closeModal }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [ageError,setAgeError] = useState(""); //tracks age related error
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
+
+  const MIN_AGE = 18;//sets minium age at 18
 
   // Redirect to home if already logged in
   useEffect(() => {
@@ -25,6 +28,16 @@ const Register = ({ closeModal }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    const ageNumber = Number(age); // convert string to number
+
+    if (isNaN(ageNumber) || ageNumber < MIN_AGE) {
+      setAgeError(`You must be at least ${MIN_AGE} years old to register.`);
+      return;
+    } else {
+      setAgeError("");
+    }
+    
     try {
       // Create user with email and password
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -80,7 +93,9 @@ const Register = ({ closeModal }) => {
               value={age}
               onChange={(e) => setAge(e.target.value)}
               required
+              min ="0"
             />
+            {ageError && <p className="error-message">{ageError}</p>}
           </div>
           <div className="form section">
             <label>Sleep Goal (hours):</label>
