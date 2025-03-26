@@ -31,8 +31,6 @@ const Register = ({ closeModal }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-
     const ageNumber = Number(age); // convert string to number
 
     if (isNaN(ageNumber) || ageNumber < MIN_AGE) {
@@ -42,22 +40,6 @@ const Register = ({ closeModal }) => {
       setAgeError("");
     }
     
-=======
-    setError("");
-
-    // Password validation
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    // Simple password strength check
-    if (password.length < 6) {
-      setError("Password should be at least 6 characters long.");
-      return;
-    }
-
->>>>>>> a346c9d4357bbd381fa5aa0975f4951d0119cabc
     try {
       // Create user with email and password
       const res = await createUserWithEmailAndPassword(auth, email, password);
