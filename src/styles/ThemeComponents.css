@@ -1,3 +1,47 @@
+/* Add or update these CSS variables for light/dark themes */
+
+:root {
+  /* Light theme (default) */
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --danger-color: #dc3545;
+  --danger-hover: #c82333;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --text-color: #212529;
+  --bg-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --border-color: #dee2e6;
+  --input-bg: #ffffff;
+  --button-text: #ffffff;
+  --disabled-bg: #e9ecef;
+  --disabled-text: #6c757d;
+  --heading-color: #212529;
+  --label-color: #495057;
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] {
+  /* Dark theme */
+  --primary-color: #0d6efd;
+  --primary-hover: #0b5ed7;
+  --danger-color: #dc3545;
+  --danger-hover: #bb2d3b;
+  --success-color: #198754;
+  --warning-color: #ffc107;
+  --text-color: #f8f9fa;
+  --bg-color: #212529;
+  --card-bg: #343a40;
+  --border-color: #495057;
+  --input-bg: #495057;
+  --button-text: #ffffff;
+  --disabled-bg: #6c757d;
+  --disabled-text: #adb5bd;
+  --heading-color: #f8f9fa;
+  --label-color: #e9ecef;
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+}
+
 /* Themed Components - Common UI elements with theme variables */
 
 /* Page container */
@@ -18,6 +62,7 @@
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
+  color: var(--text-color);
 }
 
 /* Form elements */
@@ -29,12 +74,15 @@
   border-radius: 6px;
   width: 100%;
   transition: all 0.3s ease;
+  color: var(--text-color);
 }
 
 .themed-input:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.25);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
 }
 
 .themed-select {
@@ -67,6 +115,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  color: var(--button-text);
 }
 
 .themed-button:hover:not(:disabled) {
@@ -102,6 +151,7 @@
 
 .themed-text {
   color: var(--text-primary);
+  color: var(--text-color);
 }
 
 .themed-text-muted {
@@ -143,6 +193,8 @@
   align-items: center;
   min-height: 200px;
   color: var(--text-secondary);
+  color: var(--text-color);
+  background-color: var(--bg-color);
 }
 
 .themed-spinner {
@@ -152,9 +204,357 @@
   width: 30px;
   height: 30px;
   animation: spin 1s linear infinite;
+  border-top-color: var(--primary-color);
 }
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.themed-heading {
+  color: var(--heading-color);
+}
+
+.themed-label {
+  color: var(--label-color);
+}
+
+.themed-error {
+  color: var(--danger-color);
+}
+
+.themed-success {
+  color: var(--success-color);
+}
+
+/* Weekly Records Component Styling */
+.week-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.nav-button {
+  background: var(--primary-color, #5A67D8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: var(--primary-hover, #4C51BF);
+  transform: scale(1.05);
+}
+
+.nav-button:disabled {
+  background: var(--disabled-bg, #CBD5E0);
+  cursor: not-allowed;
+}
+
+/* Sleep App Container */
+.sleep-app-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-color, #2D3748);
+  background-color: var(--bg-color, #F7FAFC);
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Page Header */
+.page-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--heading-color, #4A5568);
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--text-secondary, #718096);
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Weekly Summary */
+.weekly-summary {
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background-color: var(--card-bg, white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.summary-header {
+  background: linear-gradient(135deg, #5A67D8, #805AD5);
+  color: white;
+  padding: 1rem;
+}
+
+.summary-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+}
+
+.summary-stats {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stat-icon {
+  color: var(--primary-color, #5A67D8);
+  font-size: 1.5rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--heading-color, #4A5568);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #718096);
+}
+
+.quality-indicator {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.stat-phases {
+  padding-top: 0.5rem;
+}
+
+.phase-bar {
+  display: flex;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.phase-segment {
+  transition: flex 0.3s ease;
+}
+
+.phase-legend {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #718096);
+}
+
+.color-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.color-dot.deep {
+  background-color: #3B82F6;
+}
+
+.color-dot.rem {
+  background-color: #8B5CF6;
+}
+
+.color-dot.light {
+  background-color: #A5B4FC;
+}
+
+/* Records Styling */
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sleep-record-card {
+  display: flex;
+  background-color: var(--card-bg, white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sleep-record-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.record-date {
+  background: linear-gradient(to bottom, #5A67D8, #4C51BF);
+  color: white;
+  padding: 1rem;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.day-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.date {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.record-details {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.record-duration {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.duration-icon {
+  color: var(--primary-color, #5A67D8);
+}
+
+.duration-value {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--heading-color, #2D3748);
+}
+
+.record-quality {
+  display: flex;
+  align-items: center;
+}
+
+.quality-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.record-phases {
+  margin-top: 0.5rem;
+}
+
+.phase-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #718096);
+  margin-top: 0.25rem;
+}
+
+.record-interruptions {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #718096);
+}
+
+.interruption-value {
+  font-weight: 600;
+  color: var(--heading-color, #4A5568);
+}
+
+/* Loading State */
+.loading-container {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary, #718096);
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid var(--primary-color, #5A67D8);
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary, #718096);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Responsive Adjustments for Weekly Records */
+@media (max-width: 768px) {
+  .sleep-record-card {
+    flex-direction: column;
+  }
+
+  .record-date {
+    padding: 0.75rem;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .day-name {
+    margin-bottom: 0;
+  }
+
+  .phase-legend, .phase-values {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
 }

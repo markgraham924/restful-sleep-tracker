@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Register from "./Register";
 import Login from "./Login";
+import ForgottenPassword from "./ForgottenPassword"; // Updated import name
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase-config";
 
 const Landing = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -24,6 +26,9 @@ const Landing = () => {
 
   const handleShowRegister = () => setShowRegister(true);
   const handleCloseRegister = () => setShowRegister(false);
+  
+  const handleShowForgotPassword = () => setShowForgotPassword(true);
+  const handleCloseForgotPassword = () => setShowForgotPassword(false);
 
   if (loading) {
     return <div className="loading-container">Loading...</div>;
@@ -41,8 +46,9 @@ const Landing = () => {
           Register
         </button>
       </div>
-      {showLogin && <Login closeModal={handleCloseLogin} />}
+      {showLogin && <Login closeModal={handleCloseLogin} showForgotPassword={handleShowForgotPassword} />}
       {showRegister && <Register closeModal={handleCloseRegister} />}
+      {showForgotPassword && <ForgottenPassword closeModal={handleCloseForgotPassword} />}
     </div>
   );
 };

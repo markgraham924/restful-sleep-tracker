@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-const Login = ({ closeModal }) => {
+const Login = ({ closeModal, showForgotPassword }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -47,13 +47,13 @@ const Login = ({ closeModal }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content">
-        <h2>Login</h2>
+      <div className="modal-content themed-card">
+        <h2 className="themed-heading">Login</h2>
         <form onSubmit={handleLogin}>
           <div className="form section">
-            <label>Email:</label>
+            <label className="themed-label">Email:</label>
             <input
-              className="input"
+              className="input themed-input"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -61,17 +61,29 @@ const Login = ({ closeModal }) => {
             />
           </div>
           <div className="form section">
-            <label>Password:</label>
+            <label className="themed-label">Password:</label>
             <input
-              className="input"
+              className="input themed-input"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <div className="forgot-password-link">
+              <button 
+                type="button" 
+                className="text-button"
+                onClick={() => {
+                  closeModal();
+                  showForgotPassword();
+                }}
+              >
+                Forgot your password?
+              </button>
+            </div>
           </div>
-          {error && <p className="error-message">{error}</p>}
-          <div className="section">
+          {error && <p className="error-message themed-error">{error}</p>}
+          <div className="button-group">
             <button className="button button-blue" type="submit">
               Login
             </button>
