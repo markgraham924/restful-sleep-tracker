@@ -62,8 +62,13 @@ const AIInsights = ({ sleepData, maxSentences = 2 }) => {
           - Sleep debt: ${sleepData.stats.sleepDebt} hours
           - Last night's sleep: ${sleepData.lastNight.sleepDuration} hours
 
+          I want you to act as a sleep coach. Your task is to provide insights based on the data provided.
+          You are not a doctor, but you can provide general advice on sleep habits and patterns.
+
           The user will see your direct output of text, so please make sure to provide a clear and concise response.
           Avoid using any markdown or code formatting. Just plain text.
+          You can also include emojis to make it more engaging.
+          Please keep your response under 100 words.
         `;
 
         // Generate content using the firebase model
