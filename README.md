@@ -61,7 +61,7 @@ Restful Sleep Tracker empowers users to take control of their sleep health by of
 
 1. Clone the repository
    ```
-   git clone https://github.com/yourusername/restful-sleep-tracker.git
+   git clone https://github.com/markgraham924/restful-sleep-tracker.git
    ```
 
 2. Install dependencies
